@@ -34,7 +34,7 @@ spec:
         - >
           set -e
 
-          git config --global --add safe.directory /workspace/source
+          git config --global --add safe.directory $(workspaces.source.path)
           BRANCH=$(git branch --show-current)
 
           if [ $(params.PR_NUMBER) == "NA" ] && \

@@ -34,12 +34,14 @@ spec:
         - >
           set -e
 
+          if [ $() ]
+
           if [ $(params.PR_NUMBER) == "NA" ] && \
            ( [ $(params.GIT_REVISION) == "main" ] || [ $(params.GIT_REVISION) == "master" ] ); then
           
-          git remote set-url origin "https://x-token-auth:${GIT_TOKEN}@bitbucket.org/$(params.REPO_PATH).git"
-
-          git config user.email ${GIT_EMAIL}
+          # this should already be set by git-fetch???
+          # git remote set-url origin "https://x-token-auth:${GIT_TOKEN}@bitbucket.org/$(params.REPO_PATH).git"
+          # git config user.email ${GIT_EMAIL}
           
           git tag -am "Bump version to $(params.IMAGE_TAG)" $(params.IMAGE_TAG)
           
@@ -54,6 +56,14 @@ spec:
       resources: {}
       workingDir: $(workspaces.source.path)
       env:
+        - name: WORKSPACE_SSH_DIRECTORY_BOUND
+          value: $(workspaces.ssh-directory.bound)
+        - name: WORKSPACE_SSH_DIRECTORY_PATH
+          value: $(workspaces.ssh-directory.path)
+        - name: WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND
+          value: $(workspaces.basic-auth.bound)
+        - name: WORKSPACE_BASIC_AUTH_DIRECTORY_PATH
+          value: $(workspaces.basic-auth.path)
         - name: GIT_TOKEN
           valueFrom:
             secretKeyRef:
@@ -66,3 +76,7 @@ spec:
               key: email
   workspaces:
     - name: source
+    - name: ssh-directory
+      optional: true
+    - name: basic-auth
+      optional: true

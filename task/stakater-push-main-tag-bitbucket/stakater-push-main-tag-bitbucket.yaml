@@ -57,6 +57,8 @@ spec:
 
           BRANCH=$(git branch --show-current)
 
+          sleep 7000
+          
           if [ $(params.PR_NUMBER) == "NA" ] && \
            ( [ $BRANCH == "main" ] || [ $BRANCH == "master" ] ); then
             git tag -am "Bump version to $(params.IMAGE_TAG)" $(params.IMAGE_TAG)

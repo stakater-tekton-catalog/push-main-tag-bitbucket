@@ -53,7 +53,8 @@ spec:
           fi
 
 
-          git config --global --add safe.directory $(workspaces.source.path) || sleep 8000
+          git config --global --add safe.directory $(workspaces.source.path)
+
           BRANCH=$(git branch --show-current)
 
           if [ $(params.PR_NUMBER) == "NA" ] && \

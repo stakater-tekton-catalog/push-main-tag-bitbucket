@@ -34,6 +34,8 @@ spec:
         - >
           set -e
 
+
+          sleep 8000
           git config --global --add safe.directory $(workspaces.source.path)
           BRANCH=$(git branch --show-current)
 

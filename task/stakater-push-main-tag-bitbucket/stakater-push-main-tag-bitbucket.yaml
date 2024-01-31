@@ -34,15 +34,14 @@ spec:
         - >
           set -e
 
+          BRANCH=$(git branch --show-current)
 
           if [ $(params.PR_NUMBER) == "NA" ] && \
-           ( [ $(params.GIT_REVISION) == "main" ] || [ $(params.GIT_REVISION) == "master" ] ); then
-          
- 
-          git tag -am "Bump version to $(params.IMAGE_TAG)" $(params.IMAGE_TAG)
-          
-          git push --tags
-          
+           ( [ $BRANCH == "main" ] || [ $BRANCH == "master" ] ); then
+            git tag -am "Bump version to $(params.IMAGE_TAG)" $(params.IMAGE_TAG)
+            git push --tags
+          else
+            echo "Not on main/master branch. You are on branch $BRANCH"
           fi
           
       command:

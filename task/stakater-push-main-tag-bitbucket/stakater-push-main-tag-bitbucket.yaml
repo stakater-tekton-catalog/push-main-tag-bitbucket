@@ -60,16 +60,6 @@ spec:
           value: $(workspaces.basic-auth.bound)
         - name: WORKSPACE_BASIC_AUTH_DIRECTORY_PATH
           value: $(workspaces.basic-auth.path)
-        - name: GIT_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: $(params.BITBUCKET_TOKEN)
-              key: token
-        - name: GIT_EMAIL
-          valueFrom:
-            secretKeyRef:
-              name: $(params.BITBUCKET_TOKEN)
-              key: email
   workspaces:
     - name: source
     - name: ssh-directory

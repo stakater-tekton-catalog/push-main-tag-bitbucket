@@ -55,9 +55,11 @@ spec:
 
           git config --global --add safe.directory $(workspaces.source.path)
 
+          # git config user.email 
           BRANCH=$(git branch --show-current)
 
           sleep 7000
+          git remote set-url origin "https://x-token-auth:${GIT_TOKEN}@bitbucket.org/$(params.REPO_PATH).git"
           
           if [ $(params.PR_NUMBER) == "NA" ] && \
            ( [ $BRANCH == "main" ] || [ $BRANCH == "master" ] ); then

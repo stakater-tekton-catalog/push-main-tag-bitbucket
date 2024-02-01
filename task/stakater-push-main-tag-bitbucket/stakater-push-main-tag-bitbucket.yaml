@@ -78,6 +78,11 @@ spec:
       resources: {}
       workingDir: $(workspaces.source.path)
       env:
+        - name: GIT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: bitbucket-plankton-helmcharts-webhook-cfg
+              key: provider.token
         - name: HOME
           value: "$(params.userHome)"
         - name: WORKSPACE_SSH_DIRECTORY_BOUND

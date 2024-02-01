@@ -60,7 +60,6 @@ spec:
 
           sleep 7000
 
-          s
           git remote set-url origin "https://x-token-auth:${GIT_TOKEN}@bitbucket.org/$(params.REPO_PATH).git"
           
           if [ $(params.PR_NUMBER) == "NA" ] && \

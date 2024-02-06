@@ -24,7 +24,7 @@ spec:
       type: string
       default: "git-auth"
       description: Secret that stores the Access Token and User Email for BitBucket
-    - name: REPO_ENDPOINT
+    - name: REPO_URL
       type: string
       description: URL of the repository.
     - name: CUSTOM_CA_CERT_PATH

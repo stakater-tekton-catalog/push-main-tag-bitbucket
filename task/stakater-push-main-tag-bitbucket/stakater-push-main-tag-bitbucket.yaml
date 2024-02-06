@@ -50,7 +50,7 @@ spec:
             REPO_PATH=${REPO_PATH#"http://"}
           fi
 
-          sleep 1000;
+          git config --global --add safe.directory $(workspaces.source.path)
 
           if [ $(params.PR_NUMBER) == "NA" ] && \
            ( [ $(params.GIT_REVISION) == "main" ] || [ $(params.GIT_REVISION) == "master" ] ); then

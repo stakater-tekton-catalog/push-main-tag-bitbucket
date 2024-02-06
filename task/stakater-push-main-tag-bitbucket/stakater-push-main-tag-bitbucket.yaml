@@ -52,14 +52,12 @@ spec:
 
           sleep 1000;
 
-
-          if [[ $(params.CUSTOM_CA_CERT_PATH) != "" ]]; then
-            git config http.sslCAInfo $(params.CUSTOM_CA_CERT_PATH)
-          fi
-
           if [ $(params.PR_NUMBER) == "NA" ] && \
            ( [ $(params.GIT_REVISION) == "main" ] || [ $(params.GIT_REVISION) == "master" ] ); then
           
+          if [[ $(params.CUSTOM_CA_CERT_PATH) != "" ]]; then
+            git config http.sslCAInfo $(params.CUSTOM_CA_CERT_PATH)
+          fi
 
           git remote set-url origin "https://${GIT_USERNAME}:${ACCESS_TOKEN}@${REPO_PATH}"
 

@@ -38,15 +38,15 @@ spec:
 
           REPO_PATH=$(params.REPO_URL)
 
-          if [[ $(params.REPO_URL) == https://* ]]
+          if [[ $(params.REPO_URL) == https://* ]]; then
             REPO_PATH=${REPO_PATH#"https://"}
           fi
 
-          if [[ $(params.REPO_URL) == http://* ]]
+          if [[ $(params.REPO_URL) == http://* ]]; then
             REPO_PATH=${REPO_PATH#"http://"}
           fi
 
-          if [[ $(params.CUSTOM_CA_CERT_PATH) != "" ]]
+          if [[ $(params.CUSTOM_CA_CERT_PATH) != "" ]]; then
             git config http.sslCAInfo $(params.CUSTOM_CA_CERT_PATH)
           fi
 

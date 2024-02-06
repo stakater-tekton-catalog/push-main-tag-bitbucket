@@ -24,20 +24,36 @@ spec:
       type: string
       default: "git-auth"
       description: Secret that stores the Access Token and User Email for BitBucket
-    - name: REPO_PATH
+    - name: REPO_ENDPOINT
       type: string
-      description: Name of Bitbucket project and Repository
-
+      description: URL of the repository.
+    - name: CUSTOM_CA_CERT_PATH
+      type: string
+      default: ""
   steps:
     - args:
         - '-c'
         - >
           set -e
 
+          REPO_PATH=$(params.REPO_URL)
+
+          if [[ $(params.REPO_URL) == https://* ]]
+            REPO_PATH=${REPO_PATH#"https://"}
+          fi
+
+          if [[ $(params.REPO_URL) == http://* ]]
+            REPO_PATH=${REPO_PATH#"http://"}
+          fi
+
+          if [[ $(params.CUSTOM_CA_CERT_PATH) != "" ]]
+            git config http.sslCAInfo $(params.CUSTOM_CA_CERT_PATH)
+          fi
+
           if [ $(params.PR_NUMBER) == "NA" ] && \
            ( [ $(params.GIT_REVISION) == "main" ] || [ $(params.GIT_REVISION) == "master" ] ); then
           
-          git remote set-url origin "https://x-token-auth:${GIT_TOKEN}@bitbucket.org/$(params.REPO_PATH).git"
+          git remote set-url origin "https://${GIT_USERNAME}:${ACCESS_TOKEN}@${REPO_PATH}"
 
           git config user.email ${GIT_EMAIL}
           
@@ -54,7 +70,12 @@ spec:
       resources: {}
       workingDir: $(workspaces.source.path)
       env:
-        - name: GIT_TOKEN
+        - name: GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: $(params.BITBUCKET_TOKEN)
+              key: username
+        - name: ACCESS_TOKEN
           valueFrom:
             secretKeyRef:
               name: $(params.BITBUCKET_TOKEN)

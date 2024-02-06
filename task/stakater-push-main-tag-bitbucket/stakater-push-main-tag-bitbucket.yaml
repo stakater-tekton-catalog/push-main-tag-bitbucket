@@ -8,9 +8,9 @@ metadata:
     app.kubernetes.io/version: "0.0.0"
 spec:
   params:
-    - name: IMAGE_TAG
+    - name: SEM_VER
       type: string
-      description: Reference of the image tag
+      description: The new version to push
     - name: PR_NUMBER
       type: string
       default: NA
@@ -57,7 +57,7 @@ spec:
 
           git config user.email ${GIT_EMAIL}
           
-          git tag -am "Bump version to $(params.IMAGE_TAG)" $(params.IMAGE_TAG)
+          git tag -am "Bump version to $(params.SEM_VER)" $(params.SEM_VER)
           
           git push --tags
           

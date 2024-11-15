@@ -47,7 +47,7 @@ spec:
           
       command:
         - /bin/bash
-      image: 'ghcr.io/stakater/pipeline-toolbox:v0.0.37'
+      image: 'ghcr.io/stakater/pipeline-toolbox:v0.0.42'
       name: push-main-tag
       resources: {}
       workingDir: $(workspaces.source.path)
